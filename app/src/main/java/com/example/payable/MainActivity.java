@@ -6,10 +6,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.weatherapp.model.WeatherResponse;
-import com.example.weatherapp.network.RetrofitClient;
+import com.example.payable.model.WeatherResponse;
+import com.example.payable.network.RetrofitClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,7 +18,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String API_KEY = "your_openweathermap_api_key";
+    private static final String API_KEY = "64b377cf24c86b1f49d6f563b2ef7f53";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
         btnGetWeather.setOnClickListener(v -> {
             String cityName = etCityName.getText().toString().trim();
             if (cityName.isEmpty()) {
-                tvError.setText("Please enter a city name");
-                tvError.setVisibility(View.VISIBLE);
+                showErrorDialog("Please enter a city name.");
             } else {
                 fetchWeather(cityName, tvCityName, tvTemperature, tvWeatherCondition, tvError);
                 sharedPreferences.edit().putString("last_city", cityName).apply();
@@ -56,25 +56,34 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     WeatherResponse weather = response.body();
-                    tvCityName.setText("City: " + weather.getName());
-                    tvTemperature.setText("Temperature: " + weather.getMain().getTemp() + " °C");
-                    tvWeatherCondition.setText("Condition: " + weather.getWeather().get(0).getDescription());
+                    tvCityName.setText( weather.getName());
+                    tvTemperature.setText(String.valueOf((int) weather.getMain().getTemp()));
+
+
+                    tvWeatherCondition.setText(weather.getWeather().get(0).getDescription());
 
                     tvCityName.setVisibility(View.VISIBLE);
                     tvTemperature.setVisibility(View.VISIBLE);
                     tvWeatherCondition.setVisibility(View.VISIBLE);
                     tvError.setVisibility(View.GONE);
                 } else {
-                    tvError.setText("Failed to fetch weather data");
-                    tvError.setVisibility(View.VISIBLE);
+                    showErrorDialog("Failed to fetch weather data. Please check the entered city.");
                 }
             }
 
             @Override
             public void onFailure(Call<WeatherResponse> call, Throwable t) {
-                tvError.setText("An error occurred: " + t.getMessage());
-                tvError.setVisibility(View.VISIBLE);
+                showErrorDialog("An error occurred: " + t.getMessage());
             }
         });
+    }
+
+    private void showErrorDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
     }
 }

@@ -1,0 +1,88 @@
+1. Describe the lifecycle of an iOS application from launch to termination.
+Not Running: The app is not in memory.
+
+Inactive: The app is in the foreground but not receiving user input (e.g., during a call or notification).
+
+Active: The app is in the foreground and receiving user input.
+
+Background: The app is running but not in the foreground, either performing background tasks or preparing to suspend.
+
+Suspended: The app is in memory but not executing code. It can be terminated by the system if resources are needed.
+
+2. What UI frameworks are used in iOS development? What are their differences?
+
+UIKit:
+
+Imperative programming model.
+
+Supports views, controllers, and event-driven development.
+
+Backward compatible and widely used for traditional iOS apps.
+
+SwiftUI:
+
+Declarative programming model.
+
+Simplifies UI development with a reactive data-binding approach.
+
+Introduced in iOS 13 and focuses on modern, reusable code.
+
+3. How is an API call typically handled in iOS? What tools or libraries are used?
+
+Native Approach: Using URLSession for handling network requests.
+
+Libraries:
+
+Alamofire: Simplifies HTTP networking and provides additional features like JSON parsing.
+
+Combine: Reactive framework for chaining API calls and handling responses.
+
+4. What options exist for storing small amounts of local data on an iOS device?
+
+UserDefaults: For simple key-value storage.
+
+Keychain: For securely storing sensitive data like passwords or tokens.
+
+Core Data: For structured data with persistence.
+
+SQLite: For relational database needs.
+
+5. What architecture patterns are common in iOS apps? Which one do you prefer and why?
+
+MVC (Model-View-Controller): Default architecture with clear separation of concerns.
+
+MVVM (Model-View-ViewModel): Promotes better testability and reduces view-controller complexity.
+
+VIPER: Enforces strict separation of concerns with modular code structure.
+
+Preferred: MVVM for its balance of simplicity, testability, and modular design.
+
+6. How do you handle API failures, invalid input, or unexpected errors in iOS?
+Error Handling:
+
+Use do-catch blocks for synchronous tasks.
+
+Provide user-friendly error messages or fallback options.
+
+Retry Mechanism: Use exponential backoff for transient issues.
+
+Tools: Logging libraries (e.g., os_log or SwiftyBeaver) for debugging.
+
+7. State 2–3 key differences between developing for Android and iOS.
+Programming Languages:
+
+Android: Primarily uses Kotlin/Java.
+
+iOS: Uses Swift/Objective-C.
+
+UI Frameworks:
+
+Android: Uses XML-based layouts and Jetpack Compose.
+
+iOS: Uses UIKit or SwiftUI.
+
+Fragmentation:
+
+Android: Diverse device and OS landscape.
+
+iOS: Limited devices and tightly controlled OS versions.
