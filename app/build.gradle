@@ -1,0 +1,62 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+android {
+    namespace 'com.example.payable'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.payable"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.activity
+    implementation libs.constraintlayout
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+
+    implementation libs.appcompat.v140
+    implementation libs.material.v140
+    implementation libs.constraintlayout.v212
+
+    // Retrofit for network requests
+    implementation libs.retrofit
+    implementation libs.converter.gson
+
+    // Gson for JSON parsing (used by Retrofit)
+    implementation libs.gson
+
+    // Coroutine support for Retrofit (optional, but recommended for background tasks)
+    implementation libs.kotlinx.coroutines.android
+
+    // SharedPreferences for storing last city
+    implementation libs.preference
+
+    // To ensure backward compatibility with older Android versions
+    implementation libs.lifecycle.runtime.ktx
+    implementation libs.lifecycle.viewmodel.ktx
+
+}
